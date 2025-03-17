@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import './css/App.css'
 import Home from './Oldalak/Home'
 import Menu from './Oldalak/Menu'
+import Felvettek from './Oldalak/Felvettek'
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
           <Menu/>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/felvettek' element={<felvettek />} />
+            <Route path='/felvettek' element={<Felvettek />} />
           </Routes>
         </div>   
     </>

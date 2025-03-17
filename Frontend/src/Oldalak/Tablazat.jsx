@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import '../css/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'tachyons';
 
 function Tablazat() {
     const [data, setData] = useState([]);
@@ -15,7 +13,7 @@ function Tablazat() {
 
     return (
         <div>
-            <table className="table table-bordered">
+            <table className="table table-bordered table-striped">
                 <thead className="thead-dark">
                     <tr>
                         <th>Tanuló neve</th>

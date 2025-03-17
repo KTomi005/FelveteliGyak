@@ -28,15 +28,60 @@ db.connect(err =>{
     }
 })
 
-app.get("/rangsor", (req, res) =>{
-    const [oktazon] = req.params;
-    sql = "SELECT diakok.nev FROM diakok INNER JOIN  tagozatok ON tagozatok.agazat"
-    db.query(sql, [oktazon], (err, result) =>{
-        if (err) return res.status(500).json({error: err.message});
-        res.json(result[0]);
-    });
-})
+app.get('/elozetes-rangsor', async (req, res) => {
+    try {
+        const query = `
+            SELECT 
+                diakok.nev AS "Tanuló neve", 
+                tagozatok.agazat AS "Ágazat", 
+                diakok.hozott + diakok.kpmagy + diakok.kpmat AS "osszpont"
+            FROM diakok 
+            JOIN jelentkezesek ON diakok.oktazon = jelentkezesek.diak 
+            JOIN tagozatok ON jelentkezesek.tag = tagozatok.akod
+            ORDER BY diakok.nev ASC;
+        `;
 
+        db.query(query, (err, rows) => {
+            if (err) {
+                console.error("Hiba a rangsor lekérdezése közben:", err);
+                return res.status(500).send("Hiba történt az adatok lekérésekor.");
+            }
+            res.json(rows);
+        });
+    } catch (error) {
+        console.error("Hiba a rangsor lekérdezése közben:", error);
+        res.status(500).send("Hiba történt az adatok lekérésekor.");
+    }
+});
+
+app.get('/felvettek-rangsora', async (req, res) => {
+    try {
+        const query = `
+            SELECT 
+                tagozatok.agazat AS "Ágazat", 
+                COUNT(jelentkezesek.diak) AS "Jelentkezők száma", 
+                SUM(diakok.hozott + diakok.kpmagy + diakok.kpmat) AS "osszpontszam"
+            FROM jelentkezesek
+            JOIN diakok ON jelentkezesek.diak = diakok.oktazon
+            JOIN tagozatok ON jelentkezesek.tag = tagozatok.akod
+            WHERE tagozatok.agazat IN ('Informatika', 'Elektronika') 
+                AND tagozatok.nyek = TRUE
+            GROUP BY tagozatok.agazat
+            ORDER BY "Jelentkezők száma" DESC;
+        `;
+
+        db.query(query, (err, rows) => {
+            if (err) {
+                console.error("Hiba a rangsor lekérdezése közben:", err);
+                return res.status(500).send("Hiba történt az adatok lekérésekor.");
+            }
+            res.json(rows);
+        });
+    } catch (error) {
+        console.error("Hiba a rangsor lekérdezése közben:", error);
+        res.status(500).send("Hiba történt az adatok lekérésekor.");
+    }
+});
 
 
 
