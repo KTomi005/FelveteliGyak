@@ -35,6 +35,7 @@ function Home(){
                 </div>
                 <div>
                         <h3>A felvételt nyert tanulók névsora a nyelvi előkészítőre</h3>
+                        <Tablazat/>
                     <div>
 
                     </div>
