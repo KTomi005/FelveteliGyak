@@ -39,6 +39,10 @@ function Felvettek() {
                         <h3>A Választott ágazat: {agazat}</h3> 
                         <Select/>
                     </div>
+                    <div className="col-md-6">
+                        <h3>A Választott:</h3>
+                        <Select/>
+                    </div>
                     
                 </div>
                 

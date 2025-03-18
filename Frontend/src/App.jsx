@@ -3,6 +3,7 @@ import './css/App.css'
 import Home from './Oldalak/Home'
 import Menu from './Oldalak/Menu'
 import Felvettek from './Oldalak/Felvettek'
+import Select from './Oldalak/Select'
 
 
 function App() {
