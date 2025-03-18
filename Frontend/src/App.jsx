@@ -1,8 +1,9 @@
-import { Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './css/App.css'
 import Home from './Oldalak/Home'
 import Menu from './Oldalak/Menu'
 import Felvettek from './Oldalak/Felvettek'
+
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
           <Menu/>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/felvettek' element={<Felvettek />} />
+            <Route path='/felvettek/:agazat' element={<Felvettek />} />
           </Routes>
         </div>   
     </>

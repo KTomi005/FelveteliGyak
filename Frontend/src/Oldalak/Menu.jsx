@@ -23,7 +23,7 @@ const Menu = () => {
                     <NavLink to="/">Főoldal</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/felvettek">Felvettek</NavLink>
+                    <NavLink to="/felvettek/:agazat">Felvettek</NavLink>
                 </li>
 
             </ul>
