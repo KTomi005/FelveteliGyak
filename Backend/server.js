@@ -9,8 +9,8 @@ app.use(cors());
 
 const db  = mysql.createConnection({
     user: "root",
-    host: "127.0.0.1",
-    port: 3306,
+    host: "localhost",
+    port: 3307,
     password: "",
     database: "felveteli",
 });
@@ -28,6 +28,7 @@ db.connect(err =>{
     }
 })
 
+
 app.get('/elozetes-rangsor', async (req, res) => {
     try {
         const query = `
@@ -38,7 +39,7 @@ app.get('/elozetes-rangsor', async (req, res) => {
             FROM diakok 
             JOIN jelentkezesek ON diakok.oktazon = jelentkezesek.diak 
             JOIN tagozatok ON jelentkezesek.tag = tagozatok.akod
-            ORDER BY diakok.nev ASC;
+            ORDER BY osszpont DESC;
         `;
 
         db.query(query, (err, rows) => {
@@ -67,7 +68,7 @@ app.get('/felvettek-rangsora', async (req, res) => {
             WHERE tagozatok.agazat IN ('Informatika', 'Elektronika') 
                 AND tagozatok.nyek = TRUE
             GROUP BY tagozatok.agazat
-            ORDER BY "Jelentkezők száma" DESC;
+            ORDER BY osszpontszam DESC;
         `;
 
         db.query(query, (err, rows) => {
@@ -83,6 +84,48 @@ app.get('/felvettek-rangsora', async (req, res) => {
     }
 });
 
+
+app.get('/agazatok', async (req, res) => {
+    try {
+        const query = "SELECT DISTINCT agazat AS Ágazat FROM tagozatok";
+        db.query(query, (err, rows) => {
+            if (err) {
+                console.error("Hiba az ágazatok lekérésekor:", err);
+                return res.status(500).send("Hiba történt az adatok lekérésekor.");
+            }
+            res.json(rows);
+        });
+    } catch (error) {
+        console.error("Hiba az ágazatok lekérésekor:", error);
+        res.status(500).send("Hiba történt az adatok lekérésekor.");
+    }
+});
+
+app.get('/felvettek/:agazat', async (req, res) => {
+    const { agazat } = req.params;
+    try {
+        const query = `
+            SELECT diakok.nev, 
+                   diakok.hozott + diakok.kpmagy + diakok.kpmat AS osszpont
+            FROM diakok
+            JOIN jelentkezesek ON diakok.oktazon = jelentkezesek.diak
+            JOIN tagozatok ON jelentkezesek.tag = tagozatok.akod
+            WHERE tagozatok.agazat = ?
+            ORDER BY osszpont DESC;
+        `;
+
+        db.query(query, [agazat], (err, rows) => {
+            if (err) {
+                console.error("Hiba a felvettek lekérésekor:", err);
+                return res.status(500).send("Hiba történt az adatok lekérésekor.");
+            }
+            res.json(rows);
+        });
+    } catch (error) {
+        console.error("Hiba a felvettek lekérésekor:", error);
+        res.status(500).send("Hiba történt az adatok lekérésekor.");
+    }
+});
 
 
 app.listen(3001, () =>{
