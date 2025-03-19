@@ -3,10 +3,9 @@ body{
   }
   
   .bg-fej {
-    background-image: url('oktatas-01.jpg');
+    background-image: url('/oktatas-01.jpg');
     background-position: center;
     height: 400px;
-    opacity: 0.5;
   }
   
   .bg-fej h1{
@@ -53,4 +52,6 @@ body{
     visibility:hidden;
   }
   
-  
+  .logo{
+    opacity: 0.5;
+  }

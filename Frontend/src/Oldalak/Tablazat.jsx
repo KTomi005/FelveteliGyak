@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+ 
 function Tablazat() {
     const [data, setData] = useState([]);
-
+ 
     useEffect(() => {
         axios.get("http://localhost:3001/rangsor")
             .then(response => setData(response.data))
             .catch(error => console.error("Hiba az adatok lekérésénél:", error));
     }, []);
-
+ 
     return (
         <div>
             <table className="table table-bordered table-striped">
@@ -34,5 +34,5 @@ function Tablazat() {
         </div>
     );
 }
-
+ 
 export default Tablazat;

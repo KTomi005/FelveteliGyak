@@ -1,8 +1,7 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import Tablazat from './Tablazat';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../css/felveteli.css'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-
 import TablazatAgazat from './TablazatAgazat';
 
 function Home(){
@@ -30,7 +29,7 @@ function Home(){
                         <h3 className='text-dark'>Központi felvételi tájékoztató</h3>
                         <p>
                         A középiskolákba történő jelentkezés során az iskolák határozzák meg, hogy a felvételi rangsort mi alapján döntik el. A Jószakma Szakgimnázium a felvételi során az általános iskolából hozott és a központi felvételin szerzett pontok alapján rangsorolja az iskolába jelentkezőket. <a href="https://www.oktatas.hu/kozneveles/kozepfoku_felveteli_eljaras/kozepfoku_felveteli_eljaras_informacioi" target='_blank'>Tájákoztató oldal</a><br/>
-                        <img src="logo.png"  className="img-thumbnail" alt="img-thumbnail" title="" /></p>
+                        <img src="logo.png"  className="img-thumbnail logo" alt="img-thumbnail" title="" /></p>
                     </div>
                     <div className="col-md-4">
                         <h3>Tájékoztatás</h3> 
@@ -64,9 +63,6 @@ function Home(){
                 <button className="btn btn-primary" onClick={handleDataClick}>Adatok</button>
                         <h3>A felvételt nyert tanulók névsora a nyelvi előkészítőre</h3>
                         <TablazatAgazat/>
-                    <div>
-
-                    </div>
                 </div>
             </div>
         </>
